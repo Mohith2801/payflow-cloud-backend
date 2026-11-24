@@ -1,0 +1,35 @@
+services:
+  - type: web
+    name: payflow-cloud-backend
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: BEDROCK_ENABLED
+        value: "false"
+      - key: DB_HOST
+        fromDatabase:
+          name: payflow-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: payflow-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: payflow-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: payflow-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: payflow-db
+          property: password
+
+databases:
+  - name: payflow-db
+    plan: free
+    databaseName: payflow
+    user: payflow
